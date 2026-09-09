@@ -65,7 +65,7 @@ def ph_tile(label="", light=False):
 T = {}
 
 T["ru"] = dict(
-    lang="ru", root="", other_root="ua/", other_label="UA", self_label="RU",
+    lang="ru", root="", other_root="../", other_label="UA", self_label="RU",
     html_lang="ru",
     site_name="Art Detailing",
     phone1="+38 (067) 000-00-00", phone1_href="+380670000000",
@@ -82,7 +82,7 @@ T["ru"] = dict(
 )
 
 T["ua"] = dict(
-    lang="ua", root="", other_root="../", other_label="RU", self_label="UA",
+    lang="ua", root="", other_root="ru/", other_label="RU", self_label="UA",
     html_lang="uk",
     site_name="Art Detailing",
     phone1="+38 (067) 000-00-00", phone1_href="+380670000000",
@@ -977,14 +977,14 @@ PAGES = [
     ("contacts.html", page_contacts),
 ]
 
-for lang, out_dir in [("ru", ROOT), ("ua", os.path.join(ROOT, "ua"))]:
+for lang, out_dir in [("ua", ROOT), ("ru", os.path.join(ROOT, "ru"))]:
     os.makedirs(out_dir, exist_ok=True)
     t = dict(T[lang])
-    if lang == "ua":
-        t["root"] = ""  # ua pages are one level deep; assets referenced with ../
+    if lang == "ru":
+        t["root"] = ""  # ru pages live one level deep; assets referenced with ../
     for fname, fn in PAGES:
         html = fn(t)
-        if lang == "ua":
+        if lang == "ru":
             html = html.replace('href="assets/', 'href="../assets/').replace('src="assets/', 'src="../assets/')
         with open(os.path.join(out_dir, fname), "w", encoding="utf-8") as f:
             f.write(html)
